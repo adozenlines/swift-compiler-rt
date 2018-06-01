@@ -14,8 +14,8 @@
 #define TSAN_REPORT_H
 
 #include "sanitizer_common/sanitizer_symbolizer.h"
+#include "sanitizer_common/sanitizer_vector.h"
 #include "tsan_defs.h"
-#include "tsan_vector.h"
 
 namespace __tsan {
 
@@ -90,7 +90,7 @@ struct ReportLocation {
 
 struct ReportThread {
   int id;
-  uptr os_id;
+  tid_t os_id;
   bool running;
   bool workerthread;
   char *name;
@@ -108,6 +108,7 @@ struct ReportMutex {
 class ReportDesc {
  public:
   ReportType typ;
+  uptr tag;
   Vector<ReportStack*> stacks;
   Vector<ReportMop*> mops;
   Vector<ReportLocation*> locs;
